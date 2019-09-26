@@ -1,0 +1,36 @@
+.header {
+  display: flex;
+  align-items: center;
+  padding: 0.5em;
+  height: 40px;
+  box-sizing: border-box;
+  font-family: "Microsoft JhengHei", "微软雅黑", "Microsoft YaHei", sans-serif;
+}
+
+.header-center {
+  flex: 1;
+  text-align: center;
+}
+
+.header-label {
+  font-weight: 400;
+  text-align: center;
+  flex: 1;
+}
+
+.double-arrow {
+  color: #fff;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  outline: none;
+
+  .mat-icon {
+    font-size: 18px;
+    height: 18px;
+    width: 18px;
+    font-weight: 400;
+  }
+}

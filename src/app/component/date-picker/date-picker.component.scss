@@ -1,0 +1,13 @@
+.custom-input {
+  &::-webkit-inner-spin-button {
+    visibility: hidden;
+  }
+}
+
+:host {
+  &[darkmode] {
+    .mat-form-field-wrapper {
+      padding-bottom: 0;
+    }
+  }
+}

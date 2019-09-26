@@ -1,0 +1,18 @@
+<mat-form-field (click)="openCalendar()">
+  <input matInput
+         class="custom-input"
+         [matDatepicker]="picker"
+         [placeholder]="placeholder"
+         [disabled]="disabled"
+         [max]="max"
+         [min]="min"
+         [(ngModel)]="value"
+         (dateChange)="ondateChange()">
+  <mat-datepicker #picker
+                  panelClass="custom-datepicker-content"
+                  [dateClass]="getDateClass()"
+                  [opened]="calendarIsOpened"></mat-datepicker>
+  <mat-datepicker-toggle matSuffix
+                         class="calender"
+                         [for]="picker"></mat-datepicker-toggle>
+</mat-form-field>

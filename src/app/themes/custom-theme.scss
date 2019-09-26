@@ -1,0 +1,109 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+.custom-datepicker-content {
+  color: #fff;
+  background: #2f3235;
+  border-radius: 0;
+}
+
+.custom-calendar-cell {
+  color: #fff;
+}
+
+.mat-calendar-body-label,
+.mat-calendar-table-header,
+.mat-button-focus-overlay .mat-datepicker-toggle,
+.mat-calendar-body-cell-content {
+  color: #fff;
+}
+
+.mat-calendar-body-today:not(.mat-calendar-body-selected) {
+  border-color: rgba(255, 255, 255, .7);
+}
+
+.mat-calendar-body-selected {
+  background: #68c2ae;
+}
+
+.mat-icon-button {
+  width: 20px;
+  height: 20px;
+}
+
+.mat-calendar-body-disabled>.mat-calendar-body-cell-content:not(.mat-calendar-body-selected),
+.mat-icon-button[disabled][disabled] {
+  opacity: .2;
+  color: #fff;
+}
+
+.mat-datepicker-content .mat-calendar-next-button,
+.mat-datepicker-content .mat-calendar-previous-button {
+  color: #fff;
+}
+
+.mat-calendar-body {
+  .mark-date {
+    background: rgba(104, 194, 174, .5);
+
+    &.first {
+      border-top-left-radius: 999px;
+      border-bottom-left-radius: 999px;
+    }
+
+    &.last {
+      border-top-right-radius: 999px;
+      border-bottom-right-radius: 999px;
+    }
+  }
+}
+
+[darkmode] {
+
+  .mat-form-field-wrapper,
+  .mat-form-field-flex {
+    padding-bottom: 0;
+  }
+
+  .mat-form-field-suffix,
+  .mat-form-field-label-wrapper,
+  .mat-form-field-underline {
+    display: none;
+  }
+
+  .mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: 0;
+    border: 0;
+  }
+
+  .custom-input {
+    text-align: center;
+    display: block;
+    margin: 0;
+    width: 100%;
+    height: 20px;
+    border-radius: 5px;
+    border: none;
+    padding: 0 5px;
+    color: #fff;
+    font-size: 12px;
+    background-color: #2f3235;
+    outline: 0;
+    box-sizing: border-box;
+  }
+}
+
+// .mark-date {
+//   background: rgba(104, 194, 174, .5);
+
+//   :first-child {
+//     border-top-left-radius: 999px;
+//     border-bottom-left-radius: 999px;
+//   }
+
+//   &:nth-last-child {
+//     border-top-right-radius: 999px;
+//     border-bottom-right-radius: 999px;
+//   }
+// }

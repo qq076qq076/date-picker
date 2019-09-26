@@ -1,0 +1,11 @@
+<div class="container">
+  <app-date-picker #startPicker
+                   [(ngModel)]="startDate"
+                   [markStart]="startDate"
+                   [markEnd]="endDate"
+                   (dateChange)="onStartChange()"></app-date-picker>
+  <app-date-picker #endPicker
+                   [markStart]="startDate"
+                   [markEnd]="endDate"
+                   [(ngModel)]="endDate"></app-date-picker>
+</div>
