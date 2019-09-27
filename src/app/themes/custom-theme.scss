@@ -50,11 +50,19 @@
     &.first {
       border-top-left-radius: 999px;
       border-bottom-left-radius: 999px;
+
+      .mat-calendar-body-cell-content {
+        background: #68c2ae;
+      }
     }
 
     &.last {
       border-top-right-radius: 999px;
       border-bottom-right-radius: 999px;
+
+      .mat-calendar-body-cell-content {
+        background: #68c2ae;
+      }
     }
   }
 }

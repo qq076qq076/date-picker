@@ -1,4 +1,15 @@
-import { Component, ChangeDetectionStrategy, Input, forwardRef, ViewChild, Output, EventEmitter, ChangeDetectorRef, HostListener, ElementRef } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  Input,
+  forwardRef,
+  ViewChild,
+  Output,
+  EventEmitter,
+  ChangeDetectorRef,
+  HostListener,
+  ElementRef
+} from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { MatCalendarCellCssClasses, MatDatepicker } from '@angular/material';
 import * as  moment from 'moment';
@@ -25,7 +36,7 @@ export class DatePickerComponent implements ControlValueAccessor {
   @Input() min?: Date;
   @Input() markStart?: Date;
   @Input() markEnd?: Date;
-  @Input() isOpened?: boolean;
+  // @Input() isOpened?: boolean;
   onChange: (value: string) => void;
   onTouch: () => void;
   calendarIsOpened = false;
@@ -41,12 +52,12 @@ export class DatePickerComponent implements ControlValueAccessor {
     this.notifyValueChange();
   }
 
-  @HostListener('document:click', ['$event']) clickOut(event) {
-    // 在打開的狀態 點擊外面就直接關閉
-    if (!this.elementRef.nativeElement.contains(event.target) && this.calendarIsOpened) {
-      this.closeCalendar();
-    }
-  }
+  // @HostListener('document:click', ['$event']) clickOut(event) {
+  //   // 在打開的狀態 點擊外面就直接關閉
+  //   if (!this.elementRef.nativeElement.contains(event.target) && this.calendarIsOpened) {
+  //     this.closeCalendar();
+  //   }
+  // }
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
@@ -54,6 +65,7 @@ export class DatePickerComponent implements ControlValueAccessor {
   ) { }
 
   ondateChange() {
+    this.calendarIsOpened = false;
     this.dateChange.emit();
   }
 
@@ -91,10 +103,12 @@ export class DatePickerComponent implements ControlValueAccessor {
   }
 
   openCalendar() {
-    this.calendarIsOpened = true;
+    // console.log('here')
+    // this.calendarIsOpened = true;
+    this.picker.open();
   }
 
-  closeCalendar() {
-    this.calendarIsOpened = false;
-  }
+  // closeCalendar() {
+    // this.calendarIsOpened = false;
+  // }
 }
