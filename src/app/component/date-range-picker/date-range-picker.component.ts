@@ -1,4 +1,4 @@
-import { Component, OnInit, forwardRef, Input, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, forwardRef, ViewChild, Output, EventEmitter, ChangeDetectionStrategy, Input, ChangeDetectorRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { DatePickerComponent } from '../date-picker/date-picker.component';
 
@@ -8,63 +8,78 @@ export const INPUT_CONTROL_VALUE_ACCESSOR: any = {
   multi: true
 };
 
-export interface DateRange {
-  startDate: Date;
-  endDate: Date;
-}
+type StartDate = Date | undefined;
+type EndDate = Date | undefined;
+type DateRange = [StartDate, EndDate];
 
 @Component({
   selector: 'app-date-range-picker',
   templateUrl: './date-range-picker.component.html',
   styleUrls: ['./date-range-picker.component.scss'],
   providers: [INPUT_CONTROL_VALUE_ACCESSOR],
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DateRangePickerComponent implements ControlValueAccessor {
   @ViewChild('startPicker', { static: false }) startPicker: DatePickerComponent;
   @ViewChild('endPicker', { static: false }) endPicker: DatePickerComponent;
-  onChange: () => void;
+  @Output() update = new EventEmitter();
+  @Output() afterClose = new EventEmitter();
+  @Input() startPlaceholder?: string;
+  @Input() endPlaceholder?: string;
+  onChange: (value: DateRange) => void;
   onTouch: () => void;
-  dateRange: DateRange;
-  constructor(
-    // private changeDetectorRef: ChangeDetectorRef
-  ) {
-    this.dateRange = {
-      startDate: new Date(),
-      endDate: new Date(),
-    };
+  myStartDate: StartDate;
+  myEndDate: EndDate;
+  constructor() { }
+
+  set startDate(date: StartDate) {
+    if (date) {
+      this.myStartDate = date;
+      this.startPicker.markChange();
+      this.endPicker.markChange();
+      this.notifyValueChange();
+    }
   }
 
-  set startDate(date: Date) {
-    this.dateRange.startDate = date;
-    console.log(date)
-    // this.changeDetectorRef.markForCheck();
+  get startDate(): StartDate {
+    return this.myStartDate;
   }
 
-  get startDate() {
-    return this.dateRange.startDate;
+  set endDate(date: EndDate) {
+    if (date) {
+      this.myEndDate = date;
+      this.startPicker.markChange();
+      this.endPicker.markChange();
+      this.notifyValueChange();
+    }
   }
 
-  set endDate(date: Date) {
-    this.dateRange.endDate = date;
-    // this.changeDetectorRef.markForCheck();
-  }
-
-  get endDate() {
-    return this.dateRange.endDate;
+  get endDate(): EndDate {
+    return this.myEndDate;
   }
 
   onStartChange() {
     this.endPicker.openCalendar();
+    this.notifyRangeUpdate();
   }
 
-  writeValue(obj: any): void {
-    this.dateRange = obj;
-    if (!this.dateRange) {
-      this.dateRange = {
-        startDate: new Date(),
-        endDate: new Date(),
-      };
+  notifyRangeUpdate() {
+    if (this.myStartDate && this.myEndDate) {
+      const range = [this.myStartDate, this.myEndDate];
+      this.update.emit(range);
+    }
+  }
+
+  notifyValueChange() {
+    if (this.onChange) {
+      this.onChange([this.myStartDate, this.myEndDate]);
+    }
+  }
+
+  writeValue(obj: DateRange): void {
+    if (obj) {
+      this.myStartDate = obj[0];
+      this.myEndDate = obj[1];
     }
   }
   registerOnChange(fn: any): void {

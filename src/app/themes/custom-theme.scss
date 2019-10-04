@@ -17,6 +17,7 @@
 .mat-button-focus-overlay .mat-datepicker-toggle,
 .mat-calendar-body-cell-content {
   color: #fff;
+  border-color: transparent;
 }
 
 .mat-calendar-body-today:not(.mat-calendar-body-selected) {
@@ -67,6 +68,24 @@
   }
 }
 
+.cdk-overlay-connected-position-bounding-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .cdk-overlay-pane {
+    position: relative;
+    top: initial !important;
+    left: initial !important;
+    right: initial !important;
+    bottom: initial !important;
+  }
+}
+
+.cdk-overlay-backdrop {
+  background: rgba(0, 0, 0, .5);
+}
+
 [darkmode] {
 
   .mat-form-field-wrapper,
@@ -101,17 +120,3 @@
     box-sizing: border-box;
   }
 }
-
-// .mark-date {
-//   background: rgba(104, 194, 174, .5);
-
-//   :first-child {
-//     border-top-left-radius: 999px;
-//     border-bottom-left-radius: 999px;
-//   }
-
-//   &:nth-last-child {
-//     border-top-right-radius: 999px;
-//     border-bottom-right-radius: 999px;
-//   }
-// }

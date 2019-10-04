@@ -1,20 +1,38 @@
 <div class="center">
   <h1>Angular Material Datepicker</h1>
   <h3>normal</h3>
-  <app-date-picker [(ngModel)]="date"
+  <!-- <app-date-picker [(ngModel)]="date"
                    name="date"
                    (onChange)="onchange()"></app-date-picker>
+  {{date}}
+  -->
   <h3>darkmode</h3>
-
-  <app-date-picker [(ngModel)]="date"
-                   name="date"
-                   (onChange)="onchange()"
+  <app-date-picker [(ngModel)]="date2"
+                   (update)="console(date2)"
                    darkmode></app-date-picker>
+  {{date2}}
+
   <h3>date-range-picker</h3>
-  <app-date-range-picker [(ngModel)]="dateRange"></app-date-range-picker>
+  <app-date-range-picker [(ngModel)]="dateRange"
+                         (update)="console(dateRange)"
+                         (afterClose)="console(dateRange)"
+                         darkmode></app-date-range-picker>
+  <!--
   <h3>date-range-picker(dark mode)</h3>
-  <app-date-range-picker [(ngModel)]="dateRange" darkmode></app-date-range-picker>
+  <app-date-range-picker [(ngModel)]="dateRange"
+                         darkmode></app-date-range-picker>
   <h3>one range picker</h3>
-  <app-date-range [(ngModel)]="dateRange"></app-date-range>
+  <app-date-range [(ngModel)]="dateRange" ></app-date-range> -->
+  <h3>time picker</h3>
+  <app-time-picker [(ngModel)]="time"></app-time-picker>
+  {{time}}
+  <!-- <h3>time picker(dark mode)</h3>
+  <app-time-picker darkmode
+                   [(ngModel)]="time"
+                   (change)="changeTime()"
+                   autoClose="true"
+                   [hideButton]="true"></app-time-picker>
+  <button (click)="change()">change</button> -->
   <button (click)="show()">show</button>
+  <app-date-time-picker [(ngModel)]="date" (update)="console(date)"></app-date-time-picker>
 </div>

@@ -3,9 +3,13 @@
                    [(ngModel)]="startDate"
                    [markStart]="startDate"
                    [markEnd]="endDate"
+                   [placeholder]="startPlaceholder"
                    (dateChange)="onStartChange()"></app-date-picker>
   <app-date-picker #endPicker
+                   [(ngModel)]="endDate"
                    [markStart]="startDate"
                    [markEnd]="endDate"
-                   [(ngModel)]="endDate"></app-date-picker>
+                   [placeholder]="endPlaceholder"
+                   (afterClose)="afterClose.emit()"
+                   (dateChange)="notifyRangeUpdate()"></app-date-picker>
 </div>

@@ -1,0 +1,9 @@
+<app-date-picker #dateRef
+                 [(ngModel)]="date"
+                 [placeholder]="datePlaceholder"
+                 (dateChange)="changeDate()"></app-date-picker>
+
+<app-time-picker #timeRef
+                 [(ngModel)]="time"
+                 [placeholder]="timePlaceholder"
+                 (afterUpdate)="changeTime()"></app-time-picker>

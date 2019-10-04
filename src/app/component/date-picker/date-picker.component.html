@@ -11,7 +11,8 @@
   <mat-datepicker #picker
                   panelClass="custom-datepicker-content"
                   [dateClass]="getDateClass()"
-                  [opened]="calendarIsOpened"></mat-datepicker>
+                  [opened]="calendarIsOpened"
+                  (closed)="afterClose.emit()"></mat-datepicker>
   <mat-datepicker-toggle matSuffix
                          class="calender"
                          [for]="picker"></mat-datepicker-toggle>
