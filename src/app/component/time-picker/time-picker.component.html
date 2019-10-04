@@ -9,26 +9,5 @@
           (click)="openPicker()">
     <mat-icon class="icon">query_builder</mat-icon>
   </button>
-  <div class="container"
-       *ngIf="isOpenTimer"
-       [@timePickerAnimation]="isOpenTimer">
-    <div class="mask"
-         (click)="closeByMask()"></div>
-    <div class="picker">
-      <div class="picker-box">
-        <app-time-picker-box (add)="addHour()"
-                             (subtract)="subtractHour()"
-                             [time]="hour"></app-time-picker-box>
-        <i class="colon"></i>
-        <app-time-picker-box (add)="addMinute()"
-                             (subtract)="subtractMinute()"
-                             [time]="minute"></app-time-picker-box>
-      </div>
-      <div class="button-group"
-           *ngIf="!hideButton">
-        <button (click)="close()">取消</button>
-        <button (click)="saveButton()">確定</button>
-      </div>
-    </div>
-  </div>
+
 </mat-form-field>

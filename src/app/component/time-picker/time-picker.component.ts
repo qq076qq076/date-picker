@@ -1,8 +1,19 @@
-import { Component, forwardRef, Input, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  forwardRef,
+  Input,
+  Output, EventEmitter,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  ComponentFactoryResolver,
+  ApplicationRef,
+  Injector,
+  EmbeddedViewRef
+} from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { Moment } from 'moment';
 import * as  moment from 'moment';
 import { timePickerMaskAnimation } from './time-picker-animation';
+import { PickerComponent } from './picker/picker.component';
 
 export const INPUT_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -21,65 +32,70 @@ export const INPUT_CONTROL_VALUE_ACCESSOR: any = {
   ]
 })
 export class TimePickerComponent implements ControlValueAccessor {
-  isOpenTimer = false;
-  timePickerDate: Moment = moment();
   outDate: string;
+  pickerRef;
+  pickerInstance;
+  timePickerDate: moment.Moment;
   onChange: (value) => void;
   onTouch: () => void;
   @Input() hideButton?: boolean;
   @Input() placeholder?: string;
   @Output() afterUpdate = new EventEmitter();
-  get hour() {
-    return this.timePickerDate.hour();
-  }
-
-  get minute() {
-    return this.timePickerDate.minute();
-  }
-  constructor(private changeDetectorRef: ChangeDetectorRef) { }
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private applicationRef: ApplicationRef,
+    private injector: Injector
+  ) { }
 
   openPicker() {
-    this.toggleOpen(true);
-    if (this.outDate) {
-      this.timePickerDate = moment(this.outDate, 'HH:mm');
-    }
+    this.timePickerDate = this.outDate ? moment(this.outDate, 'HH:mm') : moment();
+    this.open();
   }
 
-  toggleOpen(isOpen: boolean) {
-    this.isOpenTimer = isOpen;
-    this.changeDetectorRef.markForCheck();
-  }
+  private open() {
+    this.pickerRef = this.componentFactoryResolver.resolveComponentFactory(PickerComponent).create(this.injector);
+    this.pickerInstance = this.pickerRef.instance;
+    this.applicationRef.attachView(this.pickerRef.hostView);
 
-  addHour() {
-    this.timePickerDate.add(1, 'hour');
-  }
-
-  subtractHour() {
-    this.timePickerDate.subtract(1, 'hour');
-  }
-
-  addMinute() {
-    this.timePickerDate.add(1, 'minute');
-  }
-
-  subtractMinute() {
-    this.timePickerDate.subtract(1, 'minute');
-  }
-
-  close() {
-    this.toggleOpen(false);
-  }
-
-  closeByMask() {
-    this.close();
-    if (this.hideButton) {
+    this.pickerInstance.timePickerDate = this.timePickerDate;
+    this.pickerInstance.addHour.subscribe(() => {
+      this.timePickerDate.add(1, 'hour');
+      this.pickerInstance.timePickerDate = this.timePickerDate;
+    });
+    this.pickerInstance.subtractHour.subscribe(() => {
+      this.timePickerDate.subtract(1, 'hour');
+      this.pickerInstance.timePickerDate = this.timePickerDate;
+    });
+    this.pickerInstance.addMinute.subscribe(() => {
+      this.timePickerDate.add(1, 'minute');
+      this.pickerInstance.timePickerDate = this.timePickerDate;
+    });
+    this.pickerInstance.subtractMinute.subscribe(() => {
+      this.timePickerDate.subtract(1, 'minute');
+      this.pickerInstance.timePickerDate = this.timePickerDate;
+    });
+    this.pickerInstance.close.subscribe(() => {
+      this.close();
+    });
+    this.pickerInstance.closeByMask.subscribe(() => {
+      this.close();
+      if (this.hideButton) {
+        this.save();
+      }
+    });
+    this.pickerInstance.save.subscribe(() => {
       this.save();
-    }
+      this.close();
+    });
+
+    const domElem = (this.pickerRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
+    document.body.appendChild(domElem);
   }
 
-  saveButton() {
-    this.save();
-    this.close();
+  private close() {
+    this.applicationRef.detachView(this.pickerRef.hostView);
+    this.changeDetectorRef.markForCheck();
   }
 
   private save() {

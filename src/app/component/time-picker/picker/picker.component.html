@@ -1,0 +1,21 @@
+<div class="container"
+     [@timePickerAnimation]="isOpenTimer">
+  <div class="mask"
+       (click)="closeByMask.emit()"></div>
+  <div class="picker">
+    <div class="picker-box">
+      <app-time-picker-box (add)="addHour.emit()"
+                           (subtract)="subtractHour.emit()"
+                           [time]="hour"></app-time-picker-box>
+      <i class="colon"></i>
+      <app-time-picker-box (add)="addMinute.emit()"
+                           (subtract)="subtractMinute.emit()"
+                           [time]="minute"></app-time-picker-box>
+    </div>
+    <div class="button-group"
+         *ngIf="!hideButton">
+      <button (click)="close.emit()">取消</button>
+      <button (click)="save.emit()">確定</button>
+    </div>
+  </div>
+</div>

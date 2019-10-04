@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDatepickerModule, MatNativeDateModule, MatIconModule, MatFormFieldModule, MatInputModule, MatButtonModule } from '@angular/material';
@@ -11,6 +10,7 @@ import { DateRangeComponent } from './component/date-range/date-range.component'
 import { TimePickerBoxComponent } from './component/time-picker/time-picker-box/time-picker-box.component';
 import { TimePickerComponent } from './component/time-picker/time-picker.component';
 import { DateTimePickerComponent } from './component/date-time-picker/date-time-picker.component';
+import { PickerComponent } from './component/time-picker/picker/picker.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +20,8 @@ import { DateTimePickerComponent } from './component/date-time-picker/date-time-
     DateRangeComponent,
     TimePickerComponent,
     TimePickerBoxComponent,
-    DateTimePickerComponent
+    DateTimePickerComponent,
+    PickerComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +37,7 @@ import { DateTimePickerComponent } from './component/date-time-picker/date-time-
   providers: [
     MatDatepickerModule,
   ],
+  entryComponents: [PickerComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
